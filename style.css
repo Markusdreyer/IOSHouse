@@ -1,0 +1,21 @@
+html {
+    height: 100%;
+    background-size: fill;
+    background: linear-gradient(to bottom right, #3b4655,  #11131a) no-repeat;
+}
+
+#container {
+    position: absolute;
+    display: block;
+    background-color: #C5C6C7;
+    height: 70vh;
+    width: 70vw;
+    top: 16%;
+    left: 17%;
+}
+
+.door {
+    position: relative;
+    display: block;
+    background-color: #1D2883;
+}
