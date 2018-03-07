@@ -19,4 +19,5 @@ else {
 function greeting() {
     document.getElementById("text").innerHTML = greetingText;
     document.getElementById("timeOfDay").innerHTML = hourNow + ":" + minuteNow;
+    
 }
