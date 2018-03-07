@@ -16,7 +16,8 @@
     <body>
         <script src="js/three.js"></script>
         <script src="js/OrbitControls.js"></script>
-        <script src="js/ObjectLoader.js"></script>
+        <script src="js/OBJLoader.js"></script>
+        <script src="js/MTLLoader.js"></script>
         
         <script>
             var scene = new THREE.Scene();
@@ -36,19 +37,43 @@
 
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-            var loader = new THREE.ObjectLoader();
+           /*
+            var mtlLoader = new THREE.MTLLoader();
+            var loader = new THREE.OBJLoader();
 
             loader.load (
-                'models/pump.json',
+                'models/floorPlan.obj',
                 function(object) {
                     scene.add(object);
                 }
-            );
-            
-            camera.position.z = 3;
+            );*/
 
-            var ambientLight = new THREE.AmbientLight(0xFFFFFF, 1.5);
-            //scene.add(ambientLight);
+                var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+				var onError = function ( xhr ) { };
+
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( 'models/' );
+				mtlLoader.load( 'floorPlan1.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( 'models/' );
+					objLoader.load( 'floorPlan1.obj', function ( object ) {
+						scene.add( object );
+					}, onProgress, onError );
+				});
+            
+            camera.position.z = -20;
+            camera.position.y = 5;
+
+            var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+            
+            scene.add(light);
 
             var update = function() {
             };
